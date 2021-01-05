@@ -16,8 +16,6 @@ class Item(models.Model):
         return self.name
 
 class Inventory(models.Model):
-
-    '''survivor = models.OneToOneField(Survivor, verbose_name='Survivor', on_delete=models.CASCADE)'''
     items = models.ManyToManyField(Item)
 
     class Meta:
@@ -37,14 +35,13 @@ class Survivor(models.Model):
     count_reports = models.IntegerField(default=0)
     inventory = models.ForeignKey(Inventory, null=True, on_delete=models.CASCADE)
 
-
-        
     def __str__(self):
         return self.name
   
 def survivor_pre_save(signal, instance, sender, **kwargs):
     if instance.inventory_id is not None:
         items = []
+        print(items)
         for item in instance.inventory.items.all():
             items.append(item.name)
         if not "Water" in items:
@@ -60,7 +57,7 @@ def survivor_pre_save(signal, instance, sender, **kwargs):
             ammunition = Item.objects.create(name="Ammunition", points=1)
             instance.inventory.items.add(ammunition)
     else:
-        if instance.is_infected == True or instance.count_reports > 0:
+        if instance.is_infected == True or instance.count_reports > 3:
             raise Exception("Impossible to register zombies!")
 
 signals.pre_save.connect(survivor_pre_save, sender=Survivor)

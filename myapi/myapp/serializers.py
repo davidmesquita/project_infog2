@@ -9,15 +9,16 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class InventorySerializer(serializers.ModelSerializer):
   
-    '''item = ItemSerializer(many=True)'''
+    items = ItemSerializer(many=True)
+
     class Meta:
         model = Inventory
-        fields = '__all__'
+        fields = ['id', 'items']
 
 class SurvivorSerializer(serializers.ModelSerializer):
     
     inventory = InventorySerializer(many=False)
-    item = ItemSerializer(many = False)
+
     class Meta:
         model = Survivor
         fields = '__all__'
