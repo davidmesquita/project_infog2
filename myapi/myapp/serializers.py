@@ -9,13 +9,15 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class InventorySerializer(serializers.ModelSerializer):
   
-    items = ItemSerializer(many=True)
-
+    '''item = ItemSerializer(many=True)'''
     class Meta:
         model = Inventory
-        fields = ['id', 'items']
+        fields = '__all__'
 
 class SurvivorSerializer(serializers.ModelSerializer):
+    
+    inventory = InventorySerializer(many=False)
+    item = ItemSerializer(many = False)
     class Meta:
         model = Survivor
         fields = '__all__'
@@ -54,4 +56,3 @@ class Survivor_LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Survivor
         fields = ('longitude', 'latitude')
-    
