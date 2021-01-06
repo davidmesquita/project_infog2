@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 import json
 
+from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
