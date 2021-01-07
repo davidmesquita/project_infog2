@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 
 import json
+
+from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,7 +11,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from myapp.models import Survivor, Item
+from .models import Survivor, Item
 from myapp.serializers import SurvivorSerializer
 from myapp.serializers import Survivor_LocationSerializer, ItemSerializer
 from rest_framework import generics
@@ -24,9 +26,10 @@ from rest_framework import status
 
 
 class SurvivorCreate(generics.ListCreateAPIView):
-
+    
     queryset = Survivor.objects.all()
     serializer_class = SurvivorSerializer
+
 
 class SurvivorDetail(generics.ListCreateAPIView):
 
