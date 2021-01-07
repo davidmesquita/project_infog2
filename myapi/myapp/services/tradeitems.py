@@ -6,7 +6,7 @@ class Trader:
         self.items = ["Water", "Food", "Medication", "Ammunition"]
 
     def allowed_to_trade_items(self):
-        return self.survivor_1.infected == False and self.survivor_2.infected == False
+        return self.survivor_1.is_infected == False and self.survivor_2.is_infected == False
 
     def count_points(self, index, survivor_key, survivor):
         points_survivor = 0
@@ -15,8 +15,7 @@ class Trader:
             if item_qt - self.request.data[index][survivor_key]["trade_item"][item_key] >= 0:
                 item_points = survivor.inventory.items.get(name=item_key).points
                 points_survivor += self.request.data[index][survivor_key]["trade_item"][item_key] * item_points
-            else:
-                raise Exception("Permission denied!")
+           
         return points_survivor
 
     def trade_items(self, data, survivor_key, survivor_1, survivor_2):
@@ -41,5 +40,4 @@ class Trader:
                     else:
                         self.trade_items(data, "survivor_2", self.survivor_2, self.survivor_1)
                 return True
-            else:
-                raise Exception("You must have the same amount of points to trade! Permission denied!")
+            
