@@ -15,7 +15,7 @@ class InventorySerializer(serializers.ModelSerializer):
         model = Inventory
         fields = ['id', 'items']
 
-class SurvivorSerializer(serializers.ModelSerializer):
+class SurvivorSerializer(serializers.ModelSerializer): 
     
     inventory = InventorySerializer(many=False)
 
@@ -36,7 +36,7 @@ class SurvivorSerializer(serializers.ModelSerializer):
             survivor.delete()
             inventory.delete()
             item.delete()
-            raise Exception("Wrong item!")
+            return Exception("Wrong item!")
 
     def create(self, validated_data):
         items_data = validated_data.pop('inventory')
