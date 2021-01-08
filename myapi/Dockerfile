@@ -1,12 +1,12 @@
-# define a imagem base
-FROM debian:latest
-# define o mantenedor da imagem
-LABEL maintainer="Macoratti"
-# Atualiza a imagem com os pacotes
-RUN apt-get update && apt-get upgrade -y
-# Instala o NGINX para testar
-RUN apt-get install nginx -y
-# Expoe a porta 80
-EXPOSE 80
-# Comando para iniciar o NGINX no Container
-CMD ["nginx", "-g", "daemon off;"]
+
+FROM python:3.8
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /code
+
+COPY requirements.txt /code/
+RUN pip install -r requirements.txt
+
+COPY . .
